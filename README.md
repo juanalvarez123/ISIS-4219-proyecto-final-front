@@ -1,3 +1,3 @@
-# ISIS-4219: Frontend proyecto final
+# ISIS-4219: Front proyecto final
 
-Frontend para el proyecto final de machine learning techniques
+Aplicación front para el proyecto final de machine learning techniques
