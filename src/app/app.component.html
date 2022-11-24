@@ -1,29 +1,57 @@
-<h1>Preguntas</h1>
+<br/>
+<div class="container">
+  <div class="row" style="color: black; text-align: center">
+    <h1>Machine Learning Techniques - XQuAD</h1>
+  </div>
 
-<div class="form-group">
-  <label for="text">Ingresa el texto</label>
-  <textarea [(ngModel)]="text" id="text"></textarea>
-</div>
+  <div class="row">
+    <h1>Preguntas</h1>
 
-<div class="form-group" *ngFor="let question of questions; let indexOfElement=index;">
-  <label for="question">Pregunta {{indexOfElement+1}}</label>
-  <input type="text" id="question" [(ngModel)]="questions[indexOfElement].text" />
-</div>
+    <div class="form-group">
+      <label for="text">Contexto</label>
+      <textarea class="form-control" [(ngModel)]="text" id="text"></textarea>
+    </div>
+  </div>
 
-<div class="form-group">
-  <button (click)="addQuestion()">Agregar pregunta</button>
-</div>
+  <div class="row">
+    <div class="col-8">
+      <div class="form-group" *ngFor="let question of questions; let indexOfQuestion=index;">
+        <label for="question">Pregunta {{indexOfQuestion + 1}}</label>
+        <div class="row">
+          <div class="col-10">
+            <input class="form-control" type="text" id="question" [(ngModel)]="questions[indexOfQuestion].text"/>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-outline-dark" *ngIf="indexOfQuestion != 0"
+                    (click)="deleteQuestion(indexOfQuestion)">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-2 align-self-end">
+      <div class="form-group">
+        <button class="btn btn-outline-dark" (click)="addQuestion()">Agregar pregunta</button>
+      </div>
+    </div>
+    <div class="col-2 align-self-end">
+      <div class="form-group">
+        <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions()">Obtener predicciones</button>
+      </div>
+    </div>
+  </div>
 
-<div class="form-group">
-  <button (click)="getPredictions()">Obtener predicciones</button>
-</div>
+  <br/>
 
-<hr/>
-
-<h1>Predicciones</h1>
-
-<div class="form-group" *ngFor="let prediction of predictions">
-  <label>Pregunta: {{prediction.question}}</label>
-  <br />
-  <label>Respuesta: {{prediction.answer}}</label>
+  <div class="row" [hidden]="predictions.length == 0">
+    <h1>Predicciones</h1>
+    <div class="form-group">
+      <div class="form-group alert alert-info" *ngFor="let prediction of predictions">
+        <h3 class="alert-heading">{{prediction.question}}</h3>
+        <hr>
+        <p class="mb-0">Respuesta: {{prediction.answer}}</p>
+      </div>
+    </div>
+  </div>
 </div>

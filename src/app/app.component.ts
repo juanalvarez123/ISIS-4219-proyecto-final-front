@@ -9,7 +9,7 @@ import {Question} from "./question";
 })
 export class AppComponent {
 
-  predictions: any;
+  predictions: any = []
   text: string | undefined;
   questions: Question[] = [new Question('')];
 
@@ -18,6 +18,16 @@ export class AppComponent {
 
   public addQuestion() {
     this.questions.push(new Question(''));
+  }
+
+  public deleteQuestion(indexOfQuestion: number) {
+    this.questions.splice(indexOfQuestion, 1)
+  }
+
+  public isValidForPredictions(): boolean {
+    let emptyQuestions = this.questions.map(q => q.text.trim()).filter(q => q == '').length
+    let isValidText = this.text != undefined && this.text.trim() !== ''
+    return this.questions.length >= 1 && emptyQuestions == 0 && isValidText;
   }
 
   public getPredictions() {
