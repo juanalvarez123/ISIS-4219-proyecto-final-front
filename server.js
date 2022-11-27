@@ -8,7 +8,6 @@ const app = express();
 app.use(express.static(__dirname + '/dist/isis-4219-proyecto-final-front'));
 
 app.get('/*', function(req,res) {
-
   res.sendFile(path.join(__dirname+'/dist/isis-4219-proyecto-final-front/index.html'));
 });
 
