@@ -15,8 +15,8 @@ export class PredictionService {
     this.headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
   }
 
-  makePrediction(text: string | undefined, questions: string[] | undefined): Observable<any> {
+  makePrediction(version: string, text: string | undefined, questions: string[] | undefined): Observable<any> {
     let body = {'text': text, 'questions': questions}
-    return this.http.post(this.URL_HOST + '/predict', body, {headers: this.headers});
+    return this.http.post(this.URL_HOST + '/'+ version + '/predict', body, {headers: this.headers});
   }
 }

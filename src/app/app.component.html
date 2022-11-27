@@ -5,52 +5,84 @@
   </div>
 
   <div class="row">
-    <h1>Preguntas</h1>
-
-    <div class="form-group">
-      <label for="text">Contexto</label>
-      <textarea class="form-control" [(ngModel)]="text" id="text"></textarea>
+    <div class="col-2">
+      <div class="card text-black mb-3" style="padding: 5pt" *ngFor="let context of contexts; let indexOfContext=index;">
+        <h5 class="card-title">{{contexts[indexOfContext].title}}</h5>
+        <p class="card-text">{{contexts[indexOfContext].text.substring(0, 70) + '...'}}</p>
+        <a class="btn btn-primary" (click)="loadContext(indexOfContext)">Cargar contexto</a>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-8">
-      <div class="form-group" *ngFor="let question of questions; let indexOfQuestion=index;">
-        <label for="question">Pregunta {{indexOfQuestion + 1}}</label>
-        <div class="row">
-          <div class="col-10">
-            <input class="form-control" type="text" id="question" [(ngModel)]="questions[indexOfQuestion].text"/>
+    <div class="col-10">
+
+      <div class="row">
+        <h1>Preguntas</h1>
+
+        <div class="form-group">
+          <label for="text">Contexto</label>
+          <textarea class="form-control" style="height: 150px" [(ngModel)]="text" id="text"></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-5">
+          <div class="form-group" *ngFor="let question of questions; let indexOfQuestion=index;">
+            <label for="question">Pregunta {{indexOfQuestion + 1}}</label>
+            <div class="row">
+              <div class="col-10">
+                <input class="form-control" type="text" id="question" [(ngModel)]="questions[indexOfQuestion].text"/>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-dark" *ngIf="indexOfQuestion != 0"
+                        (click)="deleteQuestion(indexOfQuestion)">
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="col-2">
-            <button class="btn btn-outline-dark" *ngIf="indexOfQuestion != 0"
-                    (click)="deleteQuestion(indexOfQuestion)">
-              <i class="bi bi-trash3"></i>
+        </div>
+        <div class="col-1 align-self-end">
+          <div class="form-group">
+            <button class="btn btn-outline-dark" (click)="addQuestion()" title="Agregar pregunta">
+              <i class="bi bi-plus-circle"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-2 align-self-end">
+          <div class="form-group">
+            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v1')">
+              Predecir V1
+            </button>
+          </div>
+        </div>
+        <div class="col-2 align-self-end">
+          <div class="form-group">
+            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v2')">
+              Predecir V2
+            </button>
+          </div>
+        </div>
+        <div class="col-2 align-self-end" style=" text-align: right">
+          <div class="form-group">
+            <button class="btn btn-outline-dark" (click)="cleanForm()">
+              Limpiar formulario
             </button>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-2 align-self-end">
-      <div class="form-group">
-        <button class="btn btn-outline-dark" (click)="addQuestion()">Agregar pregunta</button>
-      </div>
-    </div>
-    <div class="col-2 align-self-end">
-      <div class="form-group">
-        <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions()">Obtener predicciones</button>
-      </div>
-    </div>
-  </div>
 
-  <br/>
+      <br/>
 
-  <div class="row" [hidden]="predictions.length == 0">
-    <h1>Predicciones</h1>
-    <div class="form-group">
-      <div class="form-group alert alert-info" *ngFor="let prediction of predictions">
-        <h3 class="alert-heading">{{prediction.question}}</h3>
-        <hr>
-        <p class="mb-0">Respuesta: {{prediction.answer}}</p>
+      <div class="row" [hidden]="predictions.length == 0">
+        <h1>Predicciones {{predictionVersion}}</h1>
+        <div class="form-group">
+          <div class="form-group alert alert-info" *ngFor="let prediction of predictions">
+            <h3 class="alert-heading">{{prediction.question}}</h3>
+            <hr>
+            <p>{{prediction.answer.answer}}</p>
+            <span class="badge" [ngClass]="getBgClass(prediction.answer.score)" style="text-align: right;">Score: {{prediction.answer.score}}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
