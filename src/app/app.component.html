@@ -27,7 +27,7 @@
       </div>
 
       <div class="row">
-        <div class="col-5">
+        <div class="col-7">
           <div class="form-group" *ngFor="let question of questions; let indexOfQuestion=index;">
             <label for="question">Pregunta {{indexOfQuestion + 1}}</label>
             <div class="row">
@@ -52,15 +52,8 @@
         </div>
         <div class="col-2 align-self-end">
           <div class="form-group">
-            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v1', modeloSinEntrenarTitle)">
-              Predecir {{modeloSinEntrenarTitle}}
-            </button>
-          </div>
-        </div>
-        <div class="col-2 align-self-end">
-          <div class="form-group">
-            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v2', modeloEntrenadoTitle)">
-              Predecir {{modeloEntrenadoTitle}}
+            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions()">
+              Predecir
             </button>
           </div>
         </div>
@@ -75,14 +68,22 @@
 
       <br/>
 
-      <div class="row" [hidden]="predictions.length == 0">
-        <h1>Predicciones {{predictionTitle}}</h1>
+      <div class="row" [hidden]="predictionsV1.length == 0 || predictionsV2.length == 0">
+        <h1>Predicciones</h1>
         <div class="form-group">
-          <div class="form-group alert alert-info" *ngFor="let prediction of predictions">
+          <div class="form-group alert alert-info" *ngFor="let prediction of predictionsV1; let indexOfPrediction=index;">
             <h3 class="alert-heading">{{prediction.question}}</h3>
             <hr>
-            <p>{{prediction.answer.answer}}</p>
-            <span class="badge" [ngClass]="getBgClass(prediction.answer.score)" style="text-align: right;">Score: {{prediction.answer.score}}</span>
+            <div class="row">
+              <div class="col-6" >
+                <h5 class="card-title">{{modeloSinEntrenarTitle}}/</h5>
+                <p class="text-success">{{predictionsV1[indexOfPrediction].answer.answer}}</p>
+              </div>
+              <div class="col-6">
+                <h5 class="card-title">{{modeloEntrenadoTitle}}/</h5>
+                <p class="text-success">{{predictionsV2[indexOfPrediction].answer.answer}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
