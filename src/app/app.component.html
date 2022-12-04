@@ -6,20 +6,22 @@
 
   <div class="row">
     <div class="col-2">
+
+      <h1>Opciones</h1>
+
       <div class="card text-black mb-3" style="padding: 5pt" *ngFor="let context of contexts; let indexOfContext=index;">
         <h5 class="card-title">{{contexts[indexOfContext].title}}</h5>
         <p class="card-text">{{contexts[indexOfContext].text.substring(0, 70) + '...'}}</p>
-        <a class="btn btn-primary" (click)="loadContext(indexOfContext)">Cargar contexto</a>
+        <a class="btn btn-primary" (click)="loadContext(indexOfContext)">Cargar texto</a>
       </div>
     </div>
 
     <div class="col-10">
 
       <div class="row">
-        <h1>Preguntas</h1>
+        <h1>Texto</h1>
 
         <div class="form-group">
-          <label for="text">Contexto</label>
           <textarea class="form-control" style="height: 150px" [(ngModel)]="text" id="text"></textarea>
         </div>
       </div>
@@ -34,7 +36,7 @@
               </div>
               <div class="col-2">
                 <button class="btn btn-outline-dark" *ngIf="indexOfQuestion != 0"
-                        (click)="deleteQuestion(indexOfQuestion)">
+                        (click)="deleteQuestion(indexOfQuestion)" title="Eliminar pregunta">
                   <i class="bi bi-trash3"></i>
                 </button>
               </div>
@@ -50,15 +52,15 @@
         </div>
         <div class="col-2 align-self-end">
           <div class="form-group">
-            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v1')">
-              Predecir V1
+            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v1', 'con modelo sin entrenar')">
+              Predecir con modelo sin entrenar
             </button>
           </div>
         </div>
         <div class="col-2 align-self-end">
           <div class="form-group">
-            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v2')">
-              Predecir V2
+            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v2', 'con modelo entrenado')">
+              Predecir con modelo entrenado
             </button>
           </div>
         </div>
@@ -74,7 +76,7 @@
       <br/>
 
       <div class="row" [hidden]="predictions.length == 0">
-        <h1>Predicciones {{predictionVersion}}</h1>
+        <h1>Predicciones {{predictionTitle}}</h1>
         <div class="form-group">
           <div class="form-group alert alert-info" *ngFor="let prediction of predictions">
             <h3 class="alert-heading">{{prediction.question}}</h3>
