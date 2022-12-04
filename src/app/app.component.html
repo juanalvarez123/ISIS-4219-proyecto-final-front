@@ -52,15 +52,15 @@
         </div>
         <div class="col-2 align-self-end">
           <div class="form-group">
-            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v1', 'con modelo sin entrenar')">
-              Predecir con modelo sin entrenar
+            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v1', modeloSinEntrenarTitle)">
+              Predecir {{modeloSinEntrenarTitle}}
             </button>
           </div>
         </div>
         <div class="col-2 align-self-end">
           <div class="form-group">
-            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v2', 'con modelo entrenado')">
-              Predecir con modelo entrenado
+            <button class="btn btn-outline-dark" [disabled]="!isValidForPredictions()" (click)="getPredictions('v2', modeloEntrenadoTitle)">
+              Predecir {{modeloEntrenadoTitle}}
             </button>
           </div>
         </div>

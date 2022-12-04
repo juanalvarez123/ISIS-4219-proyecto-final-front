@@ -14,6 +14,8 @@ export class AppComponent {
   questions: Question[] = [new Question('')]
   predictionVersion: string = ''
   predictionTitle: string = ''
+  modeloSinEntrenarTitle = 'con modelo SIN entrenar'
+  modeloEntrenadoTitle = 'con modelo entrenado'
   contexts = [
     {
       'title': 'Futbol',
